@@ -6,7 +6,7 @@ import validations from "../Validation/index.js";
 const userRouter = PromiseRouter()
 
 userRouter.route('/signIn')
-    .post(userController.signIn)
+    .post(validations.validateBody(schemas.signIn),userController.signIn)
 
 userRouter.route('/signUp')
     .post(validations.validateBody(schemas.signUp),userController.signUp)

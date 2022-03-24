@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-
+import 'dotenv/config'
 import userRouter from "./Routes/Authentication.js";
 
 const app = express()
