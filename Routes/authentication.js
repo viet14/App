@@ -3,12 +3,17 @@ import userController from "../Controllers/user.js";
 import schemas from "../Validation/schema.js";
 import validations from "../Validation/index.js";
 
-const userRouter = PromiseRouter()
+const authenticationRouter = PromiseRouter()
 
-userRouter.route('/signIn')
-    .post(validations.validateBody(schemas.signIn),userController.signIn)
+authenticationRouter.route('/signIn')
+    .post(validations.validateBody(schemas.signIn ),userController.signIn)
 
-userRouter.route('/signUp')
+authenticationRouter.route('/signUp')
     .post(validations.validateBody(schemas.signUp),userController.signUp)
 
-export default userRouter
+authenticationRouter.route('/refreshToken')
+    .get(userController.refreshToken)
+
+authenticationRouter.route('/verify')
+    .post(validations.validateBody(schemas.verify) , userController.verifyEmail)
+export default authenticationRouter

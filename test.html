@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .app{
+            display: flex;
+           
+        }
+        .list{
+            width: 20%;
+            min-height: 400px;
+            border: 1px solid #ccc;
+            align-items: center;
+        }
+        .list p{
+            text-align: center;
+        }
+        .list ul{
+            padding-left: 30px;
+            list-style: none;
+        }
+
+        .chat{
+            width : 80%;
+            padding : 0 20px;
+        }
+
+        .header{
+            display: flex;
+            justify-content:space-between;
+        }
+        .chatBox{
+            background-color: rgb(170, 221, 154);
+            min-height:400px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="name">
+            <input id="name" type="text">
+            <button class="register">Go</button>
+        </div>
+        <div class="app">
+            <div class="list">
+                <p>List user</p>
+                <ul id="list_user">
+                </ul>
+                
+            </div>
+            <div class="chat">
+                <div class="header">
+                    <p>Vo Van Viet</p>
+                    <p>Hello , <span id="hello"></span></p>
+                </div>
+                <div class="chatBox">
+
+                </div>
+                <div class="input">
+                    <input type="text" placeholder="Enter your message">
+                    <button>Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.name').show();
+        $('.app').hide()
+        const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2JjZmFhZWZlYTBiMGZlYzgwMDEwYiIsImlhdCI6MTY0ODgyMDQ0MywiZXhwIjoxNjQ4ODIyMjQzfQ.EXgPGCjoO0sGpILcZSVHzyhO7mHUgo8xW4YbPtK_4nw'
+        
+        var socket = io('http://localhost:3000',{query: `token=${key}`})
+        $('.register')[0].addEventListener('click',()=>{
+            socket.emit('name' , $("#name").val())
+        })
+        setInterval(()=>{
+            socket.emit('hello', "hello")
+        },5000 )
+        socket.on("error" , arg=>{
+            alert(arg)
+        })
+
+        socket.on('activeUser' , arg=>{
+            $('#list_user').empty()
+            arg.users.map((user)=>{
+                $('#list_user').append(`<li class="username">${user}</li>`)
+            })
+        })
+
+        socket.on('unauthorized', (error) => {
+            console.log('err');
+        });
+        socket.on("setNameOk" , arg=>{
+            $('#hello').append(document.createTextNode(arg.data))
+            $('.name').hide();
+            $('.app').show();
+        })
+        socket.on("connect_error", (err) => {
+            console.log(err instanceof Error); // true
+            console.log(err.message); // not authorized
+            console.log(err.data); // { content: "Please retry later" }
+        });
+    })
+</script>
+</html>
+

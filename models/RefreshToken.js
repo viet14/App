@@ -3,10 +3,7 @@ import mongoose from "mongoose"
 const Schema = mongoose.Schema
 
 const refreshTokenSchema = new Schema({
-    refreshToken : {
-        type: String,
-        required: true
-    },
+    refreshToken:{type: String,required: true},
     expireAt: {type: Date, default: Date.now()+604800000}
     }
 )

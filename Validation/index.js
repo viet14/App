@@ -9,6 +9,7 @@ const validations = {
              next()
         }
     }
+    
 }
 
 export default validations

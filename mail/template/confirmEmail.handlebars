@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            margin : 0;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex ; justify-content: center;">
+        <div style="max-width: 500px;">
+            <header class="header">
+                <div class="brand">
+                    <h1 style="margin: 15px 0 ; color: #237df3">ChatApp</h1>
+                </div>
+            </header>
+            <hr>
+            <div class="content">
+                <p style="">Xin chào {{name}} , </p>
+                <p>Chúng tôi đã nhận được yêu cầu đăng kí tài khoản ChatApp của bạn.</p>
+                <p>Nhập mã sau đây:</p>
+                <div>
+                    <h1 style="border: 2px solid #95c2fa; 
+                            width: 100px; 
+                            padding: 6px 12px;
+                            background-color: #e7f3ff;
+                            font-size:24px">{{code}}</h1>
+                </div>
+                <p>Nếu bạn không có yêu cầu này xin hãy bỏ qua tin nhắn này</p>
+            </div>
+            <hr>
+            <footer>
+                <p>Tin nhắn này được gửi tới <span style="color:#237df3">{{email}}</span>  theo yêu câu của bạn</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,7 +4,7 @@ const generateToken = (data , key , exp) =>{
 }
 
 const verifyToken = (token , key)=>{
-    return jwt.verify(token ,key)
+   return jwt.verify(token, key)
 }
 
 export  {generateToken , verifyToken}
